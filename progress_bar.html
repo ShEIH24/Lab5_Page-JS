@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Загрузка...</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <section class="component">
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-controls">
+                <button id="decreaseProgress">-1%</button>
+                <span id="progressValue">0%</span>
+                <button id="increaseProgress">+1%</button>
+            </div>
+        </div>
+    </section>
+    <script>
+        (function() {
+            const progressFill = document.getElementById('progressFill');
+            const progressValue = document.getElementById('progressValue');
+            const increaseButton = document.getElementById('increaseProgress');
+            const decreaseButton = document.getElementById('decreaseProgress');
+
+            // текущее значение прогресса
+            let progress = 0;
+
+            // функция обновления визуального отображения прогресса
+            function updateProgress() {
+                progressFill.style.width = progress + '%';
+                progressValue.textContent = progress + '%';
+            }
+
+            // функция увеличения прогресса на 1%
+            function increaseProgress() {
+                if (progress < 100) {
+                    progress = Math.min(progress + 1, 100);
+                    updateProgress();
+                }
+            }
+
+            // функция уменьшения прогресса на 1%
+            function decreaseProgress() {
+                if (progress > 0) {
+                    progress = Math.max(progress - 1, 0);
+                    updateProgress();
+                }
+            }
+
+            increaseButton.addEventListener('click', increaseProgress);
+            decreaseButton.addEventListener('click', decreaseProgress);
+        })();
+    </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма с валидацией</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <section class="component">
+        <h2>Форма</h2>
+        <form class="validation-form" id="validationForm">
+            <div class="form-group">
+                <label for="username">Имя пользователя:</label>
+                <input type="text" id="username" name="username" required>
+                <span class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <span class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" name="password" required>
+                <span class="error-message"></span>
+            </div>
+            <button type="submit">Отправить</button>
+            <div class="success-message" id="successMessage"></div>
+        </form>
+    </section>
+    <script>
+        (function() {
+            const form = document.getElementById('validationForm');
+            const username = document.getElementById('username');
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            const successMessage = document.getElementById('successMessage');
+
+            // функция отображения ошибки для конкретного поля
+            function showError(input, message) {
+                const formGroup = input.parentElement;
+                const errorMessage = formGroup.querySelector('.error-message');
+
+                input.classList.add('error');
+                input.classList.remove('success');
+                errorMessage.textContent = message;
+            }
+
+            // функция отображения успешной валидации поля
+            function showSuccess(input) {
+                const formGroup = input.parentElement;
+                const errorMessage = formGroup.querySelector('.error-message');
+
+                input.classList.add('success');
+                input.classList.remove('error');
+                errorMessage.textContent = '';
+            }
+
+            // функция валидации имени пользователя
+            function validateUsername(value) {
+                if (value.trim() === '') {
+                    return 'Имя пользователя обязательно';
+                } else if (value.length < 3) {
+                    return 'Имя должно содержать минимум 3 символа';
+                }
+                return null;
+            }
+
+            // функция валидации email адреса
+            function validateEmail(value) {
+                // регулярное выражение для проверки формата email
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (value.trim() === '') {
+                    return 'Email обязателен';
+                } else if (!emailRegex.test(value)) {
+                    return 'Введите корректный email';
+                }
+                return null;
+            }
+
+            // функция валидации пароля
+            function validatePassword(value) {
+                if (value.trim() === '') {
+                    return 'Пароль обязателен';
+                } else if (value.length < 6) {
+                    return 'Пароль должен содержать минимум 6 символов';
+                }
+                return null;
+            }
+
+            // валидация имени при потере фокуса (пользователь вышел из поля)
+            username.addEventListener('blur', function() {
+                const error = validateUsername(this.value);
+                if (error) {
+                    showError(this, error);
+                } else {
+                    showSuccess(this);
+                }
+            });
+
+            // валидация email при потере фокуса
+            email.addEventListener('blur', function() {
+                const error = validateEmail(this.value);
+                if (error) {
+                    showError(this, error);
+                } else {
+                    showSuccess(this);
+                }
+            });
+
+            // валидация пароля при потере фокуса
+            password.addEventListener('blur', function() {
+                const error = validatePassword(this.value);
+                if (error) {
+                    showError(this, error);
+                } else {
+                    showSuccess(this);
+                }
+            });
+
+            // обработчик отправки формы
+            form.addEventListener('submit', function(e) {
+                // отменяем стандартное поведение (перезагрузку страницы)
+                e.preventDefault();
+
+                // проверяем все поля формы
+                const usernameError = validateUsername(username.value);
+                const emailError = validateEmail(email.value);
+                const passwordError = validatePassword(password.value);
+
+                // показываем результаты валидации для имени
+                if (usernameError) showError(username, usernameError);
+                else showSuccess(username);
+
+                // показываем результаты валидации для email
+                if (emailError) showError(email, emailError);
+                else showSuccess(email);
+
+                // показываем результаты валидации для пароля
+                if (passwordError) showError(password, passwordError);
+                else showSuccess(password);
+
+                // если все поля валидны (нет ошибок)
+                if (!usernameError && !emailError && !passwordError) {
+                    // показываем сообщение об успехе
+                    successMessage.textContent = 'Форма успешно отправлена!';
+                    // через 3 секунды очищаем форму
+                    setTimeout(function() {
+                        // сбрасываем все значения полей
+                        form.reset();
+                        // очищаем сообщение об успехе
+                        successMessage.textContent = '';
+                        // убираем визуальные индикаторы успеха
+                        username.classList.remove('success');
+                        email.classList.remove('success');
+                        password.classList.remove('success');
+                    }, 3000);
+                } else {
+                    // если есть ошибки, очищаем сообщение об успехе
+                    successMessage.textContent = '';
+                }
+            });
+        })();
+    </script>
+</div>
+</body>
+</html>

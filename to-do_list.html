@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do список</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <section class="component">
+        <h2>Список задач</h2>
+        <div class="todo">
+            <div class="todo-input">
+                <input type="text" id="todoInput" placeholder="Добавить новую задачу...">
+                <button id="addTodo">Добавить</button>
+            </div>
+            <ul class="todo-list" id="todoList"></ul>
+        </div>
+    </section>
+    <script>
+        (function() {
+            const todoInput = document.getElementById('todoInput');
+            const addButton = document.getElementById('addTodo');
+            const todoList = document.getElementById('todoList');
+
+            // массив для хранения всех задач
+            let todos = [];
+
+            function renderTodos() {
+                // очищаем текущий список
+                todoList.innerHTML = '';
+
+                // перебираем все задачи в массиве
+                todos.forEach(function(todo, index) {
+                    // создаём элемент списка (li)
+                    const li = document.createElement('li');
+                    // добавляем класс, если задача выполнена добавляем дополнительный класс
+                    li.className = 'todo-item' + (todo.completed ? ' completed' : '');
+
+                    // создаём чекбокс для отметки выполнения
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.className = 'todo-checkbox';
+                    // устанавливаем состояние чекбокса согласно статусу задачи
+                    checkbox.checked = todo.completed;
+                    // при изменении чекбокса переключаем статус задачи
+                    checkbox.addEventListener('change', function() {
+                        toggleTodo(index);
+                    });
+
+                    // создаём элемент для текста задачи
+                    const text = document.createElement('span');
+                    text.className = 'todo-text';
+                    text.textContent = todo.text;
+
+                    // создаём кнопку удаления задачи
+                    const deleteButton = document.createElement('button');
+                    deleteButton.className = 'todo-delete';
+                    deleteButton.textContent = 'Удалить';
+                    // при клике на кнопку удаляем задачу
+                    deleteButton.addEventListener('click', function() {
+                        deleteTodo(index);
+                    });
+
+                    // собираем элемент задачи из частей
+                    li.appendChild(checkbox);
+                    li.appendChild(text);
+                    li.appendChild(deleteButton);
+                    // добавляем элемент в список
+                    todoList.appendChild(li);
+                });
+            }
+
+            function addTodo() {
+                const text = todoInput.value.trim();
+                if (text !== '') {
+                    todos.push({ text: text, completed: false });
+                    todoInput.value = '';
+                    renderTodos();
+                }
+            }
+
+            function toggleTodo(index) {
+                todos[index].completed = !todos[index].completed;
+                renderTodos();
+            }
+
+            function deleteTodo(index) {
+                todos.splice(index, 1);
+                renderTodos();
+            }
+
+            addButton.addEventListener('click', addTodo);
+
+            todoInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addTodo();
+                }
+            });
+        })();
+    </script>
+</div>
+</body>
+</html>

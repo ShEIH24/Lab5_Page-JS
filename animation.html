@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Переключатель размера шрифта</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <section class="component">
+        <h2>Анимация при наведении</h2>
+        <div class="hover-animation">
+            <div class="hover-card" data-animation="scale">
+                <h3>Масштаб</h3>
+                <p>Наведите для увеличения</p>
+            </div>
+            <div class="hover-card" data-animation="rotate">
+                <h3>Поворот</h3>
+                <p>Наведите для вращения</p>
+            </div>
+            <div class="hover-card" data-animation="slide">
+                <h3>Сдвиг</h3>
+                <p>Наведите для движения</p>
+            </div>
+        </div>
+    </section>
+    <script>
+        (function() {
+            // получаем все карточки с анимацией
+            const hoverCards = document.querySelectorAll('.hover-card');
+
+            // для каждой карточки добавляем интерактивность
+            hoverCards.forEach(function(card) {
+                // при клике на карточку показываем информацию
+                card.addEventListener('click', function() {
+                    // получаем тип анимации из атрибута data-animation
+                    const animationType = this.getAttribute('data-animation');
+                    // показываем всплывающее окно с типом анимации
+                    alert('Вы кликнули на карточку с анимацией: ' + animationType);
+                });
+            });
+        })();
+    </script>
+</div>
+</body>
+</html>

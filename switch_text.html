@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Переключатель размера шрифта</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <section class="component">
+        <h2>Переключатель размера шрифта</h2>
+        <div class="font-size-controller">
+            <div class="font-buttons">
+                <button id="decreaseFont">A-</button>
+                <button id="resetFont">A</button>
+                <button id="increaseFont">A+</button>
+            </div>
+            <p class="sample-text" id="sampleText">
+                Это пример текста для демонстрации изменения размера шрифта.
+                Используйте кнопки выше для увеличения или уменьшения размера.
+            </p>
+        </div>
+    </section>
+    <script>
+        (function() {
+            const sampleText = document.getElementById('sampleText');
+            const decreaseButton = document.getElementById('decreaseFont');
+            const resetButton = document.getElementById('resetFont');
+            const increaseButton = document.getElementById('increaseFont');
+
+            // текущий размер шрифта в пикселях
+            let fontSize = 16;
+            // минимально допустимый размер шрифта
+            const minSize = 12;
+            // максимально допустимый размер шрифта
+            const maxSize = 24;
+
+            // функция применения нового размера шрифта к тексту
+            function updateFontSize() {
+                // устанавливаем размер шрифта через CSS
+                sampleText.style.fontSize = fontSize + 'px';
+            }
+
+            // функция увеличения размера шрифта
+            function increaseFontSize() {
+                // проверяем, что размер меньше максимального
+                if (fontSize < maxSize) {
+                    // увеличиваем на 2 пикселя
+                    fontSize += 2;
+                    // применяем новый размер
+                    updateFontSize();
+                }
+            }
+
+            // функция уменьшения размера шрифта
+            function decreaseFontSize() {
+                // проверяем, что размер больше минимального
+                if (fontSize > minSize) {
+                    // уменьшаем на 2 пикселя
+                    fontSize -= 2;
+                    // применяем новый размер
+                    updateFontSize();
+                }
+            }
+
+            // функция сброса размера к начальному значению
+            function resetFontSize() {
+                // возвращаем стандартный размер 16px
+                fontSize = 16;
+                // применяем размер
+                updateFontSize();
+            }
+
+            increaseButton.addEventListener('click', increaseFontSize);
+            decreaseButton.addEventListener('click', decreaseFontSize);
+            resetButton.addEventListener('click', resetFontSize);
+        })();
+    </script>
+</div>
+</body>
+</html>

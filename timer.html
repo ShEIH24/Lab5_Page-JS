@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Таймер</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <section class="component">
+        <h2>Таймер обратного отсчёта</h2>
+        <div class="timer">
+            <div class="timer-display" id="timerDisplay">05:00</div>
+            <div class="timer-controls">
+                <button id="startTimer">Старт</button>
+                <button id="pauseTimer">Пауза</button>
+                <button id="resetTimer">Сброс</button>
+            </div>
+        </div>
+    </section>
+    <script>
+        // таймер обратного отсчёта
+        // получаем ссылки на элементы интерфейса
+        (function() {
+            const timerDisplay = document.getElementById('timerDisplay');
+            const startButton = document.getElementById('startTimer');
+            const pauseButton = document.getElementById('pauseTimer');
+            const resetButton = document.getElementById('resetTimer');
+
+            // инициализируем переменные состояния таймера
+            let timeLeft = 300; // 5 минут в секундах
+            let timerId = null;
+            let isRunning = false;
+
+            // функция обновления отображения времени на экране
+            function updateDisplay() {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                // форматируем строку времени с добавлением ведущих нулей
+                timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }
+
+            // функция запуска таймера
+            function startTimer() {
+                if (!isRunning && timeLeft > 0) {
+                    isRunning = true;
+                    timerId = setInterval(function() {
+                        timeLeft--;
+                        updateDisplay();
+
+                        if (timeLeft === 0) {
+                            clearInterval(timerId);
+                            isRunning = false;
+                            alert('Время вышло!');
+                        }
+                    }, 1000);
+                }
+            }
+
+            // функция паузы таймера
+            function pauseTimer() {
+                if (isRunning) {
+                    clearInterval(timerId);
+                    isRunning = false;
+                }
+            }
+
+            // функция сброса таймера к начальным значениям
+            function resetTimer() {
+                clearInterval(timerId);
+                isRunning = false;
+                timeLeft = 300;
+                updateDisplay();
+            }
+
+            // назначаем обработчики событий на кнопки
+            startButton.addEventListener('click', startTimer);
+            pauseButton.addEventListener('click', pauseTimer);
+            resetButton.addEventListener('click', resetTimer);
+        })();
+    </script>
+</div>
+
+</body>
+</html>

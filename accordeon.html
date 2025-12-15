@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Аккордеон</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <section class="component">
+        <h2>Аккордеон (раскрывающиеся блоки)</h2>
+        <div class="accordion">
+            <div class="accordion-item">
+                <button class="accordion-header">Секция 1</button>
+                <div class="accordion-content">
+                    <p>Содержимое первой секции. Здесь может быть любой текст или элементы.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <button class="accordion-header">Секция 2</button>
+                <div class="accordion-content">
+                    <p>Содержимое второй секции с дополнительной информацией.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <button class="accordion-header">Секция 3</button>
+                <div class="accordion-content">
+                    <p>Содержимое третьей секции аккордеона.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        (function() {
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            // для каждого заголовка назначаем обработчик клика
+            accordionHeaders.forEach(function(header) {
+                header.addEventListener('click', function() {
+                    // получаем элемент с контентом
+                    const content = this.nextElementSibling;
+                    // проверяем, активна ли текущая секция
+                    const isActive = this.classList.contains('active');
+
+                    // закрываем все секции аккордеона
+                    accordionHeaders.forEach(function(h) {
+                        // удаляем класс активности
+                        h.classList.remove('active');
+                        // сворачиваем контент
+                        h.nextElementSibling.style.maxHeight = null;
+                    });
+
+                    // если секция не была активной, открываем её
+                    if (!isActive) {
+                        // добавляем класс активности к заголовку
+                        this.classList.add('active');
+                        // разворачиваем контент
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                    }
+                });
+            });
+        })();
+    </script>
+</div>
+</body>
+</html>
