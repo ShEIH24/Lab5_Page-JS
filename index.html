@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratornaya rabota 5</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <!-- 1. Таймер обратного отсчёта -->
+    <section class="component">
+        <h2>1. Таймер обратного отсчёта</h2>
+        <div class="timer">
+            <div class="timer-display" id="timerDisplay">05:00</div>
+            <div class="timer-controls">
+                <button id="startTimer">Старт</button>
+                <button id="pauseTimer">Пауза</button>
+                <button id="resetTimer">Сброс</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Аккордеон -->
+    <section class="component">
+        <h2>2. Аккордеон</h2>
+        <div class="accordion">
+            <div class="accordion-item">
+                <button class="accordion-header">Секция 1</button>
+                <div class="accordion-content">
+                    <p>Содержимое первой секции. Здесь может быть любой текст или элементы.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <button class="accordion-header">Секция 2</button>
+                <div class="accordion-content">
+                    <p>Содержимое второй секции с дополнительной информацией.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <button class="accordion-header">Секция 3</button>
+                <div class="accordion-content">
+                    <p>Содержимое третьей секции аккордеона.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Форма с валидацией -->
+    <section class="component">
+        <h2>3. Форма с валидацией</h2>
+        <form class="validation-form" id="validationForm">
+            <div class="form-group">
+                <label for="username">Имя пользователя:</label>
+                <input type="text" id="username" name="username" required>
+                <span class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <span class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" name="password" required>
+                <span class="error-message"></span>
+            </div>
+            <button type="submit">Отправить</button>
+            <div class="success-message" id="successMessage"></div>
+        </form>
+    </section>
+
+    <!-- 4. To-Do список -->
+    <section class="component">
+        <h2>4. To-Do список</h2>
+        <div class="todo">
+            <div class="todo-input">
+                <input type="text" id="todoInput" placeholder="Добавить новую задачу...">
+                <button id="addTodo">Добавить</button>
+            </div>
+            <ul class="todo-list" id="todoList"></ul>
+        </div>
+    </section>
+
+    <!-- 5. Прогресс-бар -->
+    <section class="component">
+        <h2>5. Прогресс-бар</h2>
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-controls">
+                <button id="decreaseProgress">-10%</button>
+                <span id="progressValue">0%</span>
+                <button id="increaseProgress">+10%</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Переключатель размера шрифта -->
+    <section class="component">
+        <h2>6. Переключатель размера шрифта</h2>
+        <div class="font-size-controller">
+            <div class="font-buttons">
+                <button id="decreaseFont">A-</button>
+                <button id="resetFont">A</button>
+                <button id="increaseFont">A+</button>
+            </div>
+            <p class="sample-text" id="sampleText">
+                Это пример текста для демонстрации изменения размера шрифта.
+                Используйте кнопки выше для увеличения или уменьшения размера.
+            </p>
+        </div>
+    </section>
+
+    <!-- 7. Анимация при наведении -->
+    <section class="component">
+        <h2>7. Анимация при наведении</h2>
+        <div class="hover-animation">
+            <div class="hover-card" data-animation="scale">
+                <h3>Масштаб</h3>
+                <p>Наведите для увеличения</p>
+            </div>
+            <div class="hover-card" data-animation="rotate">
+                <h3>Поворот</h3>
+                <p>Наведите для вращения</p>
+            </div>
+            <div class="hover-card" data-animation="slide">
+                <h3>Сдвиг</h3>
+                <p>Наведите для движения</p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script src="index.js"></script>
+</body>
+</html>
